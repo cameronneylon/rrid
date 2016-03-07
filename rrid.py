@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 from __future__ import print_function
 import requests, re, traceback, pyramid
 try:
@@ -93,8 +94,7 @@ def rrid(request):
 
     found_rrids = {}
     try:
-        #matches = re.findall('(.{0,10})(RRID:\s*)([_\w\-:]+)([^\w].{0,10})', html.replace('�','-'))
-        matches = re.findall('(.{0,10})(RRID:\s*)([_\w\-:]+)([^\w].{0,10})', html)
+        matches = re.findall('(.{0,10})(RRID:\s*)([_\w\-:]+)([^\w].{0,10})', html.replace('–','-'))
         existing = []
         for match in matches:
             print(match)
@@ -106,7 +106,7 @@ def rrid(request):
 
             new_tags = []
             if exact in existing:
-                new_tags.append('RRID:Duplicate')
+                new_tags.append('RRIDCUR:Duplicate')
             else:
                 existing.append(exact)
 
@@ -123,7 +123,7 @@ def rrid(request):
                 if root.findall('error'):
                     s = 'Resolver lookup failed.'
                     s += '<hr><p><a href="%s">resolver lookup</a></p>' % resolver_uri
-                    r = h.create_annotation_with_target_using_only_text_quote(url=target_uri, prefix=prefix, exact=exact, suffix=suffix, text=s, tags=new_tags + ['RRID:Unresolved'])
+                    r = h.create_annotation_with_target_using_only_text_quote(url=target_uri, prefix=prefix, exact=exact, suffix=suffix, text=s, tags=new_tags + ['RRIDCUR:Unresolved'])
                     print('ERROR')
                 else:
                     data_elements = root.findall('data')[0]
@@ -141,7 +141,7 @@ def rrid(request):
                     r = h.create_annotation_with_target_using_only_text_quote(url=target_uri, prefix=prefix, exact=exact, suffix=suffix, text=s, tags=new_tags + ['RRID:'+exact])
             else:
                 s = 'Resolver lookup failed.'
-                r = h.create_annotation_with_target_using_only_text_quote(url=target_uri, prefix=prefix, exact=exact, suffix=suffix, text=s, tags=new_tags + ['RRID:Unresolved'])
+                r = h.create_annotation_with_target_using_only_text_quote(url=target_uri, prefix=prefix, exact=exact, suffix=suffix, text=s, tags=new_tags + ['RRIDCUR:Unresolved'])
     except:
         print(traceback.print_exc())
 

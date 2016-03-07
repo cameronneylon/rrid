@@ -9,6 +9,7 @@ A tool and companion service used to:
 ## Getting Started
 
 * Create the Hypothesis account under which annotations will be created
+* Generate an api token at https://hypothes.is/profile/developer
 * Specify HOST, PORT, API TOKEN, and USERNAME
 * python rrid.py
 * note and install missing libraries
@@ -44,8 +45,21 @@ The found RRIDs are logged to timestamped files, along with the text of the arti
 3. `sudo pip install requests pyramid lxml`
 4. clone this repository
 5. change host and port for external http access
-6. `unset HISTFILE`
-7. `export RRIDBOT_API_TOKEN=sometoken`
-8. `export RRIDBOT_USERNAME=someusername`
-9. create a screen session
-10. in the screen session run `sudo -E ~/rrid/rrid.py` in the folder where you want to save the log files (-E preserves the environment variables)
+6. `export RRIDBOT_USERNAME=someusername`
+7. `export RRIDBOT_GROUP=somegroupname`
+8. `unset HISTFILE`
+9. `export RRIDBOT_API_TOKEN=sometoken`
+10. create a screen session
+11. in the screen session run `sudo -E ~/scibot/rrid.py` in the folder where you want to save the log files (-E preserves the environment variables)
+
+## Retrieving data
+
+Use export.py to dump a spreadsheet of RRIDs mined from the data.
+In the folder for this git repository run the following commands.
+
+0. `export RRIDBOT_USERNAME=someusername`
+1. `export RRIDBOT_GROUP=somegroupname`
+2. `unset HISTFILE`
+3. `export RRIDBOT_API_TOKEN=sometoken`
+4. `python export.py`
+
